@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 //Load environmet variables
 require('dotenv').config();
@@ -34,8 +34,8 @@ app.get('/location', (request, response) => {
 app.get('/weather', (request, response) => {
   //console.log('From weather request', request.query.data.latitude);
   // call a get weather function
-  // process teh data from the darksky json- you need a constructor
-  // resturn the results to the client
+  // process the data from the darksky json- you need a constructor
+  // return the results to the client
   try {
     const weatherData = getWeather();
     response.send(weatherData);
