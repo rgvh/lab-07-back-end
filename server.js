@@ -66,6 +66,8 @@ function Location(data) {
 }
 
 // Start building your weather function and constructor here
+// Convert to a .map function
+
 function getWeather () {
   const darkskyData = require('./data/darksky.json');
   console.log('does darksky work', darkskyData);
