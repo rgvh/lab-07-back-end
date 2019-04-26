@@ -71,12 +71,14 @@ function Location(data) {
 function getWeather () {
   const darkskyData = require('./data/darksky.json');
   console.log('does darksky work', darkskyData);
-  const weatherSummaries = [];
-
-  darkskyData.daily.data.forEach(day => {
-    weatherSummaries.push(new Weather(day));
-  });
+  const weatherSummaries = darkskyData.daily.data.map(day => new Weather(day));
+  console.log(weatherSummaries);
   return weatherSummaries;
+
+  // darkskyData.daily.data.forEach(day => {
+  //   weatherSummaries.push(new Weather(day));
+  // });
+  // return weatherSummaries;
 }
 
 // Weather forecast constructor
