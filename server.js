@@ -1,35 +1,35 @@
 'use strict';
 
-//Load environmet variables
+// Load environment variables from the .env file
 require('dotenv').config();
 
-//Load express to do the heavy lifting
+// Application Dependecies
 const express = require('express');
-const app = express();
-
 const cors = require('cors'); //Cross Origin Resource Sharing
+// const superagent = require('superagent');
 
+// Application Setup
+const app = express();
 app.use(cors()); //tell express to use cors
-
 const PORT = process.env.PORT || 3000;
-// const app = express();
-// app.use (cors());
 
-app.get('/testing', (request, response) => {
-  console.log('found the testing route')
-  response.send('<h2>HELLO WORLD</h2>')
-});
+// Incoming API Routes
 
-app.get('/location', (request, response) => {
-  try {
-    const locationData = searchToLatLong(request.query.data);
-    response.send(locationData);
-  }
-  catch (error) {
-    console.error(error);
-    response.status(500).send('Status: 500. So sorry, something went wrong.');
-  }
-});
+// app.get('/testing', (request, response) => {
+//   console.log('found the testing route')
+//   response.send('<h2>HELLO WORLD</h2>')
+// });
+
+app.get('/location', searchToLatLong);
+//   try {
+//     const locationData = searchToLatLong(request.query.data);
+//     response.send(locationData);
+//   }
+//   catch (error) {
+//     console.error(error);
+//     response.status(500).send('Status: 500. So sorry, something went wrong.');
+//   }
+// });
 
 app.get('/weather', (request, response) => {
   //console.log('From weather request', request.query.data.latitude);
@@ -48,14 +48,24 @@ app.get('/weather', (request, response) => {
 
 app.listen(PORT, () => console.log(`Listening on PORT ${PORT}`));
 
-//Helper functions
+// Helper Functions
 
 //function to get local data
-function searchToLatLong(query) {
-  const geoData = require('./data/geo.json');
-  const location = new Location(geoData);
+function searchToLatLong(request, response) {
+  try {
+    const geoData = require('./data/geo.json');
+    console.log(request.query.data);
+    const location = new Location(geoData);
+    response.send(location);
+  }
+  catch (error) {
+    console.error(error);
+    response.status(500).send('Status: 500. So sorry, something went wrong.');
+  }
+
+
+
   console.log(location);
-  return location;
 }
 
 // Location for location data
